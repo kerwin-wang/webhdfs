@@ -7,6 +7,7 @@ package webhdfs
 import (
 	"fmt"
 	"io"
+	"io/ioutil"
 	"net/http"
 	"time"
 
@@ -77,7 +78,8 @@ func (resp *HttpResponse) UnmarshalHTTP(httpResp *http.Response) {
 	}
 
 	resp.Body = httpResp.Body
-	httpResp.Body = http.NoBody
+	//httpResp.Body = http.NoBody
+	io.Copy(ioutil.Discard, httpResp.Body)
 	return
 }
 

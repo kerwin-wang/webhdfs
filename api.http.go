@@ -73,7 +73,8 @@ func (resp *HttpResponse) UnmarshalHTTP(httpResp *http.Response) {
 	}
 
 	resp.Body = httpResp.Body
-	httpResp.Body = http.NoBody
+	//httpResp.Body = http.NoBody
+	io.Copy(io.Discard, httpResp.Body)
 	return
 }
 

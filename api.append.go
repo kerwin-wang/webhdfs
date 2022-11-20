@@ -105,6 +105,8 @@ func (resp *AppendResponse) UnmarshalHTTP(httpResp *http.Response) error {
 		return nil
 	}
 	defer resp.Body.Close()
+	defer httpResp.Body.Close()
+	io.Copy(io.Discard, httpResp.Body)
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return err
